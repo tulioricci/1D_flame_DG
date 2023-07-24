@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import grid.basis as basis
-from filterfuncs import *
+#from filterfuncs import *
 
 import os
 import pickle
@@ -360,8 +360,12 @@ def rhs_invc(cv, dv, discretization):
         # flux for the left face (i.e., first point)
         flux_int = np.zeros(Ng,)
         flux_ext = np.zeros(Ng,)
+
+        #FIXME have to include the first point, both to flux_int and flux_ext
         flux_int[1:] = flux[ii][  0,  1:]
+        #FIXME have to include the first point, both to flux_int and flux_ext
         flux_ext[1:] = flux[ii][ -1,0:-1]
+        #FIXME have to include the first point, both to flux_int and flux_ext
 
         f_star = 0.5*((flux_int + flux_ext) + (1.0-alpha)*LFc*jump_L)
         d_cv[ 0,:] = (flux_int - f_star)*nhat_0
@@ -369,8 +373,11 @@ def rhs_invc(cv, dv, discretization):
         # flux for the right face (i.e., last point)
         flux_int = np.zeros(Ng,)
         flux_ext = np.zeros(Ng,)
+        #FIXME have to include the first point, both to flux_int and flux_ext
         flux_int[0:-1] = flux[ii][-1:,0:-1]
+        #FIXME have to include the first point, both to flux_int and flux_ext
         flux_ext[0:-1] = flux[ii][  0,  1:]
+        #FIXME have to include the last point, both to flux_int and flux_ext
 
         f_star = 0.5*((flux_int + flux_ext) + (1.0-alpha)*LFc*jump_R)
         d_cv[-1,:] = (flux_int - f_star)*nhat_N
